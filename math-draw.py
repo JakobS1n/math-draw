@@ -18,9 +18,9 @@ def setup():
 	global currentHeading
 
 	center = (0, 0)
-	radiusInt = 320
-	pointsInt = 300
-	multiplier = 3
+	radiusInt = 375
+	pointsInt = 700
+	multiplier = 2
 	pointsArray = [[0 for x in range(pointsInt)] for x in range(pointsInt)] 
 
 def drawPolygon(t, sideLength, numSides):
@@ -34,52 +34,51 @@ def drawCircle(anyTurtle, radius):
     sideLength = circumference / 360
     drawPolygon(anyTurtle, sideLength, 360)
 
-def calculatePoints(center, radius, intPoints, t):
+def calculatePoints(center, radius, intPoints, t, dots, update):
 	global differAngle
+
 	fullCircle = 360
 	differAngle = float(fullCircle) / float(pointsInt)
-
-	foreachDivider = pointsInt
 	currDegree = 30 # sett til 90 for aa starte fra toppen
-	test = 0
-	print differAngle
-	for i in xrange(foreachDivider):
-		print i
+
+	for i in xrange(pointsInt):
 		t.setx(0)
 		t.sety(0)
 		t.setheading(currDegree)
-		#t.pendown()
+
+		# t.pendown()
 		t.forward(radiusInt)
-		t.penup()
+		# t.penup()
+
 		currDegree = currDegree - differAngle
-		#t.dot()
-		turtle.update()
+
+		if dots:
+			t.dot()
+		if update:
+			turtle.update()
+
 		print t.pos()
 		pointsArray[i][0] = t.pos()[0]
 		pointsArray[i][1] = t.pos()[1]
 
-def drawChord(t):
+def drawChord(t, update, animation):
 	global currentHeading
 	currentPoint = 1
 	
 	t.setheading(0)
 	currentHeading = 0
-	#t.tracer(True)
+
+	if animation:
+		t.tracer(True)
+
 	for i in pointsArray:
 		nextPoint = currentPoint*multiplier 
-		#print nextPoint
 
 		while True:
 			if nextPoint <= pointsInt:
 				break
 			if nextPoint >= (pointsInt):
 				nextPoint = nextPoint - pointsInt
-
-
-		#print nextPoint
-
-		#if nextPoint >= pointsInt:
-			#break
 
 		x = nextPoint-currentPoint
 		angleMultiplier = differAngle*x
@@ -91,18 +90,18 @@ def drawChord(t):
 
 		nextPointHeading = t.towards(pointsArray[nextPoint-1][0], pointsArray[nextPoint-1][1])         
 		
-
-		
 		t.setheading(nextPointHeading)
 
 		t.setx(i[0])
 		t.sety(i[1])
 
-		turtle.update()
+		if update:
+			turtle.update()
+
 		t.pendown()
 		t.forward(chordLengthOne)
 		t.penup()
-		print currentPoint
+
 		currentPoint = currentPoint + 1
 		if currentPoint > (pointsInt):
 			break
@@ -117,7 +116,6 @@ def main():
 
 	# Skru av tegne-animasjon
 	wheel.tracer(False)
-	#turtle.tracer(0, 0)
 
 	# Faa sirkelen til aa starte aa tegnes radius fra sentrum
 	wheel.penup()
@@ -131,9 +129,13 @@ def main():
 	wheel.pendown()
 	wheel.write("Radius: " + str(radiusInt))
 	wheel.penup()
-	wheel.sety(currXY[1] + 10)
+	wheel.sety(currXY[1] - 10)
 	wheel.pendown()
 	wheel.write("Points: " + str(pointsInt))
+	wheel.penup()
+	wheel.sety(currXY[1] - 20)
+	wheel.pendown()
+	wheel.write("Multiplier: " + str(multiplier))
 	wheel.penup()
 
 	# Tegn sirkelen
@@ -143,17 +145,19 @@ def main():
 	wheel.penup()
 
 	# Calculate points
-	calculatePoints(center, radiusInt, pointsInt, wheel)
+	calculatePoints(center, radiusInt, pointsInt, wheel, False, False)
 
 	# tegn korder
-	drawChord(wheel)
+	drawChord(wheel, True, False)
 
 
   	# Skjul skilpadden
   	wheel.hideturtle()
 
-  	turtle.update() # Refresh screen
+  	# Refresh screen
+  	turtle.update() 
 	wn.exitonclick()
+
 
 setup()
 main()
