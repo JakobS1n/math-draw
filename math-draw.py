@@ -51,7 +51,7 @@ def calculatePoints(center, radius, intPoints, t, dots, update):
 
 	fullCircle = 360
 	differAngle = float(fullCircle) / float(pointsInt)
-	currDegree = 30 # sett til 90 for aa starte fra toppen
+	currDegree = 90 # sett til 90 for aa starte fra toppen
 
 	for i in xrange(pointsInt):
 		t.setx(0)
@@ -119,21 +119,8 @@ def drawChord(t, update, animation):
 			break
 	t.tracer(False)
 
-
-
-def main():
-	# Definer "skilpadde"
-	
-
-	# Skru av tegne-animasjon
+def drawStatusText():
 	wheel.tracer(False)
-
-	# Faa sirkelen til aa starte aa tegnes radius fra sentrum
-	wheel.penup()
-	wheel.sety(radiusInt)
-	startPosition = wheel.pos()
-
-	# Tegn teksten
 	wheel.penup()
 	wheel.setx(-350)
 	currXY = wheel.pos()
@@ -160,6 +147,18 @@ def main():
 	wheel.pendown()
 	wheel.write("Tracer: " + str(tracer))
 	wheel.penup()
+
+def drawThingy():
+	wheel.clear() # Clear out the drawing (if any)
+  	wheel.reset()
+
+	# Faa sirkelen til aa starte aa tegnes radius fra sentrum
+	wheel.penup()
+	wheel.sety(radiusInt)
+	startPosition = wheel.pos()
+
+	# Tegn teksten
+	drawStatusText()
 
 	# Tegn sirkelen
 	wheel.goto(startPosition)
@@ -179,7 +178,56 @@ def main():
 			drawChord(wheel, True, True)
 		else:
 			drawChord(wheel, True, False)
+	else:
+		if tracer:
+			drawChord(wheel, False, True)
+		else:
+			drawChord(wheel, False, False)
 
+  	# Skjul skilpadden
+  	wheel.hideturtle()
+
+  	# Refresh screen
+  	turtle.update() 
+	#wn.exitonclick()
+	turtle.done()
+
+def main():
+
+	# Skru av tegne-animasjon
+	wheel.tracer(False)
+
+	# Faa sirkelen til aa starte aa tegnes radius fra sentrum
+	wheel.penup()
+	wheel.sety(radiusInt)
+	startPosition = wheel.pos()
+
+	# Tegn teksten
+	drawStatusText()
+
+	# Tegn sirkelen
+	wheel.goto(startPosition)
+	wheel.pendown()
+	drawCircle(wheel, radiusInt)
+	wheel.penup()
+
+	# Calculate points
+	if dots:
+		calculatePoints(center, radiusInt, pointsInt, wheel, True, False)
+	else:
+		calculatePoints(center, radiusInt, pointsInt, wheel, False, False)
+
+	# tegn korder
+	if animation:
+		if tracer:
+			drawChord(wheel, True, True)
+		else:
+			drawChord(wheel, True, False)
+	else:
+		if tracer:
+			drawChord(wheel, True, True)
+		else:
+			drawChord(wheel, True, False)
 
   	# Skjul skilpadden
   	wheel.hideturtle()
@@ -190,255 +238,29 @@ def main():
 	turtle.done()
 
 def arrowUpKeyPress():
-
 	global multiplier
-
-  	wheel.clear() # Clear out the drawing (if any)
-  	wheel.reset()
-
   	multiplier = multiplier + 1 # Steps paa 1
-
-    # Faa sirkelen til aa starte aa tegnes radius fra sentrum
-	wheel.penup()
-	wheel.sety(radiusInt)
-	startPosition = wheel.pos()
-
-	# Tegn teksten
-	wheel.penup()
-	wheel.setx(-350)
-	currXY = wheel.pos()
-	wheel.pendown()
-	wheel.write("Radius: " + str(radiusInt))
-	wheel.penup()
-	wheel.sety(currXY[1] - 10)
-	wheel.pendown()
-	wheel.write("Points: " + str(pointsInt))
-	wheel.penup()
-	wheel.sety(currXY[1] - 20)
-	wheel.pendown()
-	wheel.write("Multiplier: " + str(multiplier))
-	wheel.penup()
-	wheel.sety(currXY[1] - 30)
-	wheel.pendown()
-	wheel.write("Animation: " + str(animation))
-	wheel.penup()
-	wheel.sety(currXY[1] - 40)
-	wheel.pendown()
-	wheel.write("Dots: " + str(dots))
-	wheel.penup()
-	wheel.sety(currXY[1] - 50)
-	wheel.pendown()
-	wheel.write("Tracer: " + str(tracer))
-	wheel.penup()
-
-	# Tegn sirkelen
-	wheel.goto(startPosition)
-	wheel.pendown()
-	drawCircle(wheel, radiusInt)
-	wheel.penup()
-
-	# Calculate points
-	calculatePoints(center, radiusInt, pointsInt, wheel, False, False)
-
-	# tegn korder
-	drawChord(wheel, False, False)
-
-
-  	# Skjul skilpadden
-  	wheel.hideturtle()
-
-  	# Refresh screen
-  	turtle.update() 
-	#wn.exitonclick()
-	turtle.done()
+  	drawThingy()
 
 
 def arrowDownKeyPress():
 	global multiplier
-
-	wheel.clear() # Clear out the drawing (if any)
-	wheel.reset()
-
 	multiplier = multiplier - 1 # Steps paa 1
-
-	# Faa sirkelen til aa starte aa tegnes radius fra sentrum
-	wheel.penup()
-	wheel.sety(radiusInt)
-	startPosition = wheel.pos()
-
-	# Tegn teksten
-	wheel.penup()
-	wheel.setx(-350)
-	currXY = wheel.pos()
-	wheel.pendown()
-	wheel.write("Radius: " + str(radiusInt))
-	wheel.penup()
-	wheel.sety(currXY[1] - 10)
-	wheel.pendown()
-	wheel.write("Points: " + str(pointsInt))
-	wheel.penup()
-	wheel.sety(currXY[1] - 20)
-	wheel.pendown()
-	wheel.write("Multiplier: " + str(multiplier))
-	wheel.penup()
-	wheel.sety(currXY[1] - 30)
-	wheel.pendown()
-	wheel.write("Animation: " + str(animation))
-	wheel.penup()
-	wheel.sety(currXY[1] - 40)
-	wheel.pendown()
-	wheel.write("Dots: " + str(dots))
-	wheel.penup()
-	wheel.sety(currXY[1] - 50)
-	wheel.pendown()
-	wheel.write("Tracer: " + str(tracer))
-	wheel.penup()
-
-	# Tegn sirkelen
-	wheel.goto(startPosition)
-	wheel.pendown()
-	drawCircle(wheel, radiusInt)
-	wheel.penup()
-
-	# Calculate points
-	calculatePoints(center, radiusInt, pointsInt, wheel, False, False)
-
-	# tegn korder
-	drawChord(wheel, False, False)
-
-
-  	# Skjul skilpadden
-  	wheel.hideturtle()
-
-  	# Refresh screen
-  	turtle.update() 
-	#wn.exitonclick()
-	turtle.done()
+	drawThingy()
 
 def arrowRightKeyPress():
 	global pointsInt
 
-	wheel.clear() # Clear out the drawing (if any)
-	wheel.reset()
-
 	if pointsInt <= 650:
 		pointsInt = pointsInt +50 # Steps paa 50
-
-	# Faa sirkelen til aa starte aa tegnes radius fra sentrum
-	wheel.penup()
-	wheel.sety(radiusInt)
-	startPosition = wheel.pos()
-
-	# Tegn teksten
-	wheel.penup()
-	wheel.setx(-350)
-	currXY = wheel.pos()
-	wheel.pendown()
-	wheel.write("Radius: " + str(radiusInt))
-	wheel.penup()
-	wheel.sety(currXY[1] - 10)
-	wheel.pendown()
-	wheel.write("Points: " + str(pointsInt))
-	wheel.penup()
-	wheel.sety(currXY[1] - 20)
-	wheel.pendown()
-	wheel.write("Multiplier: " + str(multiplier))
-	wheel.penup()
-	wheel.sety(currXY[1] - 30)
-	wheel.pendown()
-	wheel.write("Animation: " + str(animation))
-	wheel.penup()
-	wheel.sety(currXY[1] - 40)
-	wheel.pendown()
-	wheel.write("Dots: " + str(dots))
-	wheel.penup()
-	wheel.sety(currXY[1] - 50)
-	wheel.pendown()
-	wheel.write("Tracer: " + str(tracer))
-	wheel.penup()
-
-	# Tegn sirkelen
-	wheel.goto(startPosition)
-	wheel.pendown()
-	drawCircle(wheel, radiusInt)
-	wheel.penup()
-
-	# Calculate points
-	calculatePoints(center, radiusInt, pointsInt, wheel, False, False)
-
-	# tegn korder
-	drawChord(wheel, False, False)
-
-
-  	# Skjul skilpadden
-  	wheel.hideturtle()
-
-  	# Refresh screen
-  	turtle.update() 
-	#wn.exitonclick()
-	turtle.done()
+		drawThingy()
 
 def arrowLeftKeyPress():
    	global pointsInt
 
-	wheel.clear() # Clear out the drawing (if any)
-	wheel.reset()
-
 	if pointsInt >= 100:
 		pointsInt = pointsInt - 50 # Steps paa 50
-
-	# Faa sirkelen til aa starte aa tegnes radius fra sentrum
-	wheel.penup()
-	wheel.sety(radiusInt)
-	startPosition = wheel.pos()
-
-	# Tegn teksten
-	wheel.penup()
-	wheel.setx(-350)
-	currXY = wheel.pos()
-	wheel.pendown()
-	wheel.write("Radius: " + str(radiusInt))
-	wheel.penup()
-	wheel.sety(currXY[1] - 10)
-	wheel.pendown()
-	wheel.write("Points: " + str(pointsInt))
-	wheel.penup()
-	wheel.sety(currXY[1] - 20)
-	wheel.pendown()
-	wheel.write("Multiplier: " + str(multiplier))
-	wheel.penup()
-	wheel.sety(currXY[1] - 30)
-	wheel.pendown()
-	wheel.write("Animation: " + str(animation))
-	wheel.penup()
-	wheel.sety(currXY[1] - 40)
-	wheel.pendown()
-	wheel.write("Dots: " + str(dots))
-	wheel.penup()
-	wheel.sety(currXY[1] - 50)
-	wheel.pendown()
-	wheel.write("Tracer: " + str(tracer))
-	wheel.penup()
-
-	# Tegn sirkelen
-	wheel.goto(startPosition)
-	wheel.pendown()
-	drawCircle(wheel, radiusInt)
-	wheel.penup()
-
-	# Calculate points
-	calculatePoints(center, radiusInt, pointsInt, wheel, False, False)
-
-	# tegn korder
-	drawChord(wheel, False, False)
-
-  	# Skjul skilpadden
-  	wheel.hideturtle()
-
-  	# Refresh screen
-  	turtle.update() 
-	#wn.exitonclick()
-	turtle.done()
+		drawThingy()
 
 def keyExit():
 	sys.exit()
@@ -447,9 +269,28 @@ def toggleDots():
 	global dots
 	if dots:
 		dots = False
+		drawThingy()
 	else:
 		dots = True
+		drawThingy()
 
+def toggleAnimation():
+	global animation
+	if animation:
+		animation = False
+		drawThingy()
+	else:
+		animation = True
+		drawThingy()
+
+def toggleTracer():
+	global tracer
+	if tracer:
+		tracer = False
+		drawThingy()
+	else:
+		tracer = True
+		drawThingy()
 
 setup()
 
@@ -459,6 +300,8 @@ wn.onkey(arrowRightKeyPress, "Right")
 wn.onkey(arrowLeftKeyPress, "Left")
 wn.onkey(wn.bye, "q")
 wn.onkey(toggleDots, "d")
+wn.onkey(toggleAnimation, "a")
+wn.onkey(toggleTracer, "t")
 
 wn.listen()
 
