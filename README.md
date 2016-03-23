@@ -10,6 +10,11 @@ Navigate to the folder with math-draw.py, and execute this:
 ```
   python math-draw.py
 ```
+You can send parameters form the commanline like this 
+
+```
+  python math-draw.py -r radius -m multiplier -p points —-animation yes —-tracer yes  -h heading -c color —random —-debug
+```
 
 ## Options
 When the program is started it will start to draw a figure, if the window is in focus you can use this hotkeys to do different things.
