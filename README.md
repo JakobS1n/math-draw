@@ -28,5 +28,4 @@ When the program is started it will start to draw a figure, if the window is in 
 - t: Toggle handdrawing animation
 
 ## Todo
-- Add ability for commandline parameters
 
