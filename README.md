@@ -1,16 +1,18 @@
 # math-draw
 A simple program for drawing mathematical figures
 
+This works perfectly, but if you want to see the exact same result without the hassle of installing and messing with python. You can go [here](http://dev.jakobstendahl.tk/projects/MathDraw/) and see a JavaScript version that does the exact same thing :)
+
 ## Requirements
  - Tested with Python 2.7.10
- - As far as i know this is the only requirements to run this program
+ - As far as I know this is the only requirements to run this program
 
 ## Launch
 Navigate to the folder with math-draw.py, and execute this:
 ```
   python math-draw.py
 ```
-You can send parameters form the commanline like this 
+You can send parameters form the commandline like this 
 
 ```
   python math-draw.py -r radius -m multiplier -p points —-animation yes —-tracer yes  -h heading -c color —random —-debug
